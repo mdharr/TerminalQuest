@@ -7,7 +7,7 @@ class Grid {
         for (let row = 0; row < height; row++) {
             let thisRow = []
             for (let col = 0; col < width; col++) {
-                thisRow.push('🌳')
+                thisRow.push(this.randomTile())
             }
             this.grid.push(thisRow)
         }
@@ -21,15 +21,20 @@ class Grid {
     displayGrid() {
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
-                process.stdout.write(`${this.grid[row][col]} `)
+                process.stdout.write(this.grid[row][col] + " ")
             }
             process.stdout.write(`\n`)
         }
     }
+
+    randomTile() {
+        const tiles = ['🌳', '🌲', '🌴', '🌵']
+        const random = Math.floor(Math.random() * tiles.length)
+        return tiles[random]
+    }
 }
 
 new Grid(15, 15)
-
 
 
 export { Grid }
