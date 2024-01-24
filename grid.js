@@ -1,3 +1,5 @@
+import { GridObject } from "./grid-object.js"
+
 class Grid {
     constructor(width, height) {
         this.width = width
@@ -5,15 +7,15 @@ class Grid {
 
         this.grid = []
         for (let row = 0; row < height; row++) {
-            let thisRow = []
+            let currentRow = []
             for (let col = 0; col < width; col++) {
-                thisRow.push(this.randomTile())
+                currentRow.push(new GridObject('🌳'))
             }
-            this.grid.push(thisRow)
+            this.grid.push(currentRow)
         }
 
-        this.grid[height-1][0] = '🧝'
-        this.grid[0][width-1] = '🏰'
+        this.grid[height-1][0] = new GridObject('🧝')
+        this.grid[0][width-1] = new GridObject('🏰')
 
         this.displayGrid()
     }
@@ -21,16 +23,10 @@ class Grid {
     displayGrid() {
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
-                process.stdout.write(this.grid[row][col] + " ")
+                process.stdout.write(this.grid[row][col].sprite + " ")
             }
             process.stdout.write(`\n`)
         }
-    }
-
-    randomTile() {
-        const tiles = ['🌳', '🌲', '🌴', '🌵']
-        const random = Math.floor(Math.random() * tiles.length)
-        return tiles[random]
     }
 }
 
