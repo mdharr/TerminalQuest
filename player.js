@@ -8,6 +8,9 @@ class Player {
         this.name = name
         this.stats = stats
     }
+    getName() {
+        return this.name
+    }
     getStats() {
         return {
             attack: this.#stats.attack,
