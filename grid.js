@@ -30,7 +30,7 @@ class Grid {
     }
 
     async startGame() {
-        while(this.player.getStats.hp > 0) {
+        while(this.player.getStats().hp > 0) {
             this.displayGrid()
             const response = await promptPlayerForDirection()
             
@@ -58,6 +58,8 @@ class Grid {
     }
 
     displayGrid() {
+        this.player.describe()
+
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
                 process.stdout.write(this.grid[row][col].sprite + " ")
@@ -207,7 +209,7 @@ class Grid {
     }
 
     movePlayerDown() {
-        if(this.playerX === this.height - 1) {
+        if(this.playerY === this.height - 1) {
             console.log('Cannot move down')
             return
         }
