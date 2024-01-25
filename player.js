@@ -29,6 +29,10 @@ class Player {
             this.#stats.hp += statsObject.hp
         }
     }
+    describe() {
+        const stats = this.#stats
+        console.log(`Player Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+    }
 }
 
 export { Player }
