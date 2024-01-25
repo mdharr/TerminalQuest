@@ -18,6 +18,17 @@ class Player {
             hp: this.#stats.hp
         }
     }
+    addToStats(statsObject) {
+        if(statsObject.attack) {
+            this.#stats.attack += statsObject.attack
+        }
+        if(statsObject.defense) {
+            this.#stats.defense += statsObject.defense
+        }
+        if(statsObject.hp) {
+            this.#stats.hp += statsObject.hp
+        }
+    }
 }
 
 export { Player }
