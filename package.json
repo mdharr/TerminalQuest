@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mdharr/TerminalQuest#readme",
   "dependencies": {
+    "chalk": "^5.3.0",
     "inquirer": "^9.2.12"
   },
   "type": "module"
