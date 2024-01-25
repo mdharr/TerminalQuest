@@ -12,6 +12,9 @@ class ItemObject extends GridObject {
         this.type = 'item',
         this.#stats = stats
     }
+    getName() {
+        return this.#stats.name
+    }
 }
 
 export { ItemObject }
