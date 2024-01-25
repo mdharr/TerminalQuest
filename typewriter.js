@@ -1,42 +1,30 @@
 function typewriterEffect(text) {
     return new Promise((resolve) => {
-        let i = 0;
-        let currentSentence = '';
-        let isPeriod = false;
+        let i = 0
+        let currentSentence = ''
+        let isPeriod = false
 
         function typeNextChar() {
             if (i < text.length) {
-                const char = text.charAt(i);
-                i++;
+                const char = text.charAt(i)
+                i++
 
                 if (isPeriod && char === ' ') {
-                    typeNextChar();
-                    return;
+                    typeNextChar()
+                    return
                 }
 
-                currentSentence += char;
-                process.stdout.write('\r' + currentSentence);
-
-                if (char === '.') {
-                    isPeriod = true;
-                    setTimeout(() => {
-                        console.log();
-                        currentSentence = '';
-                        setTimeout(typeNextChar, 500);
-                    }, 2000);
-                } else {
-                    isPeriod = false;
-                    setTimeout(typeNextChar, 50);
-                }
+                currentSentence += char
+                process.stdout.write('\r' + currentSentence)
+                setTimeout(typeNextChar, 25)
             } else {
-                console.log();
-                // Resolve the promise when the typewriter effect is done
-                resolve();
+                console.log()
+                resolve()
             }
         }
 
-        typeNextChar();
-    });
+        typeNextChar()
+    })
 }
 
 export { typewriterEffect }

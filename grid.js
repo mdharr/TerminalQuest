@@ -63,15 +63,14 @@ class Grid {
     }
 
     async displayGrid() {
-        console.log()
         this.player.describe()
         console.log()
-
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
-                process.stdout.write(this.grid[row][col].sprite + " ")
+                process.stdout.write(this.grid[row][col].sprite + `\t`)
             }
             process.stdout.write(`\n`)
+            console.log()
         }
         console.log()
         if(this.#startJourney) {
@@ -104,9 +103,10 @@ class Grid {
         return object
     }
 
-    executeTurn() {
+    async executeTurn() {
         if (this.grid[this.playerY][this.playerX].type === 'win') {
-            console.log(`Congrats! You win!`)
+            // console.log(`Congrats! You win!`)
+            await typewriterEffect(`Congrats! You win!`)
             process.exit()
         }
 
