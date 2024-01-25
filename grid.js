@@ -29,7 +29,33 @@ class Grid {
         this.startGame()
     }
 
+    async startGame() {
+        while(this.player.getStats.hp > 0) {
+            this.displayGrid()
+            const response = await promptPlayerForDirection()
+            
+            switch (response) {
+                case "Up": {
+                    this.movePlayerUp()
+                    break
+                }
+                case "Down": {
+                    this.movePlayerDown()
+                    break
+                }
+                case "Left": {
+                    this.movePlayerLeft()
+                    break
+                }
+                case "Right": {
+                    this.movePlayerRight()
+                    break
+                }
+            }
 
+            console.log("---------------------------------------------------")
+        }
+    }
 
     displayGrid() {
         for (let row = 0; row < this.height; row++) {
