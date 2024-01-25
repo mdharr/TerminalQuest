@@ -38,7 +38,7 @@ class ItemObject extends GridObject {
         const randomIndex = Math.floor(Math.random() * swordDiscoveryLines.length)
         const stats = this.#stats
         console.log(`${this.sprite} You found a ${stats.name}!`)
-        console.log(`Player: "${swordDiscoveryLines[randomIndex]}"`)
+        console.log(`🧝💬: "${swordDiscoveryLines[randomIndex]}"`)
         console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
     }
 }

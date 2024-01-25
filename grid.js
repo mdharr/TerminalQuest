@@ -3,9 +3,13 @@ import { ItemObject } from "./item-object.js"
 import { EnemyObject } from "./enemy-object.js"
 import { Player } from "./player.js"
 import { promptPlayerForDirection } from "./player-prompts.js"
+import { typewriterEffect } from "./typewriter.js"
+
+import chalk from 'chalk'
 
 class Grid {
     #currentObject
+    #startJourney = true
 
     constructor(width, height, playerStartX = 0, playerStartY = height - 1) {
         this.width = width
@@ -31,7 +35,8 @@ class Grid {
 
     async startGame() {
         while(this.player.getStats().hp > 0) {
-            this.displayGrid()
+            await this.displayGrid()
+            console.log()
             const response = await promptPlayerForDirection()
             
             switch (response) {
@@ -53,18 +58,25 @@ class Grid {
                 }
             }
 
-            console.log("----------------------------------------------------------------------")
+            console.log(chalk.white('----------------------------------------------------------------------'))
         }
     }
 
-    displayGrid() {
+    async displayGrid() {
+        console.log()
         this.player.describe()
+        console.log()
 
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
                 process.stdout.write(this.grid[row][col].sprite + " ")
             }
             process.stdout.write(`\n`)
+        }
+        console.log()
+        if(this.#startJourney) {
+            await typewriterEffect(this.player.embark())
+            this.#startJourney = false
         }
     }
 
@@ -99,7 +111,7 @@ class Grid {
         }
 
         if (this.#currentObject.type === 'discovered') {
-            this.#currentObject.describe()
+            // this.#currentObject.describeOld()
             return
         }
 
@@ -116,8 +128,8 @@ class Grid {
         const enemyName = this.#currentObject.getName()
         const playerStats = this.player.getStats()
 
-        console.log(enemyStats)
-        console.log(playerStats)
+        // console.log(enemyStats)
+        // console.log(playerStats)
 
         if (enemyStats.defense > playerStats.attack) {
             console.log(`You lose - ${enemyName} was too powerful!`)
@@ -157,9 +169,12 @@ class Grid {
         this.playerX += 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describe()
+            this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
+        }
+        if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
+            this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
@@ -177,10 +192,13 @@ class Grid {
         this.playerX -= 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describe()
-
+            this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
+        }
+
+        if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
+            this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
@@ -198,9 +216,13 @@ class Grid {
         this.playerY -= 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describe()
+            this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
+        }
+
+        if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
+            this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
@@ -218,9 +240,13 @@ class Grid {
         this.playerY += 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describe()
+            this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
+        }
+
+        if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
+            this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
@@ -242,7 +268,7 @@ class Grid {
             "We've reached the end of the world. Here, our footsteps must halt."
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
-        console.log(`Player: "${lines[randomIndex]}"`)
+        console.log(`${chalk.blue('🧝💬')}: "${lines[randomIndex]}"`)
     }
 
 }

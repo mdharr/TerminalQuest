@@ -41,7 +41,7 @@ class EnemyObject extends GridObject {
         const randomIndex = Math.floor(Math.random() * spiderEncounterLines.length)
         const stats = this.#stats
         console.log(`${this.sprite} You encountered a ${stats.name}!`)
-        console.log(`Player: "${spiderEncounterLines[randomIndex]}"`)
+        console.log(`🧝💬: "${spiderEncounterLines[randomIndex]}"`)
         console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
     }
 }
