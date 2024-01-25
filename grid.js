@@ -1,4 +1,7 @@
 import { GridObject } from "./grid-object.js"
+import { ItemObject } from "./item-object.js"
+import { EnemyObject } from "./enemy-object.js"
+import { Player } from "./player.js"
 
 class Grid {
     #currentObject
@@ -36,6 +39,30 @@ class Grid {
         }
     }
 
+    generateGridObject() {
+        const random = Math.random()
+        let object
+        if (random < 0.15) {
+            object = new ItemObject('🗡', {
+                name: 'Sword',
+                attack: 3,
+                defense: 1,
+                hp: 0
+            })
+        } else if (random < 0.35) {
+            object = new EnemyObject('🕷', {
+                name: "Spider",
+                attack: 5,
+                defense: 1,
+                hp: 6
+            })
+        } else {
+            object = new GridObject('👣', "discovered")
+        }
+
+        return object
+    }
+
     movePlayerRight() {
         if(this.playerX === this.width - 1) {
             console.log('Cannot move right')
@@ -52,7 +79,7 @@ class Grid {
         }
 
         // discovering a new place
-        // this.#currentObject = new GridObject() // generation
+        this.#currentObject = this.generateGridObject() // generation
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 

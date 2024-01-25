@@ -25,7 +25,7 @@ class ItemObject extends GridObject {
     describe() {
         const stats = this.#stats
         console.log(`${this.sprite} You found a ${stats.name}!`)
-        console.log(`${stats.name}'s Stats: HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+        console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
     }
 }
 
