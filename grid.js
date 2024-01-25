@@ -80,6 +80,7 @@ class Grid {
 
         // discovering a new place
         this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject.describe()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -100,7 +101,8 @@ class Grid {
         }
 
         // discovering a new place
-        // this.#currentObject = new GridObject() // generation
+        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject.describe()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -120,7 +122,8 @@ class Grid {
         }
 
         // discovering a new place
-        // this.#currentObject = new GridObject() // generation
+        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject.describe()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -140,7 +143,8 @@ class Grid {
         }
 
         // discovering a new place
-        // this.#currentObject = new GridObject() // generation
+        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject.describe()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
