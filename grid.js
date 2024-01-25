@@ -11,6 +11,7 @@ class Grid {
         this.height = height
         this.playerX = playerStartX
         this.playerY = playerStartY
+        this.player = new Player('Guts', { attack: 10, defense: 5, hp: 20 })
 
         this.grid = []
         for (let row = 0; row < height; row++) {
@@ -63,6 +64,58 @@ class Grid {
         return object
     }
 
+    executeTurn() {
+        if (this.grid[this.playerY][this.playerX].type === 'win') {
+            console.log(`Congrats! You win!`)
+            process.exit()
+        }
+
+        if (this.#currentObject.type === 'discovered') {
+            this.#currentObject.describe()
+            return
+        }
+
+        if (this.#currentObject.type === 'item') {
+            this.#currentObject.describe()
+            const itemStats = this.#currentObject.getStats()
+            this.player.addToStats(itemStats)
+            return
+        }
+
+        this.#currentObject.describe()
+
+        const enemyStats = this.#currentObject.getStats()
+        const enemyName = this.#currentObject.getName()
+        const playerStats = this.player.getStats()
+
+        if (enemyStats.defense > playerStats.attack) {
+            console.log(`You lose - ${enemyName} was too powerful!`)
+            process.exit()
+        }
+
+        let totalPlayerDamage = 0
+        while(enemyStats.hp > 0) {
+            const playerTurn = playerStats.attack - enemyStats.defense
+            const enemyTurn = enemyStats.attack - playerStats.defense
+            if (playerTurn > 0) {
+                enemyStats.hp -= playerTurn
+            }
+            if (enemyTurn > 0) {
+                playerStats.hp -= enemyTurn
+                totalPlayerDamage += enemyTurn
+            }
+
+            if (playerStats.hp <= 0) {
+                console.log(`You lose - ${enemyName} was too powerful!`)
+                process.exit()
+            }
+
+            this.player.addToStats({ hp: -totalPlayerDamage })
+            console.log(`You defeated the ${enemyName}! Your updated stats:`)
+            this.player.describe()
+        }
+    }
+
     movePlayerRight() {
         if(this.playerX === this.width - 1) {
             console.log('Cannot move right')
@@ -78,9 +131,8 @@ class Grid {
             return
         }
 
-        // discovering a new place
-        this.#currentObject = this.generateGridObject() // generation
-        this.#currentObject.describe()
+        this.#currentObject = this.generateGridObject()
+        this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -100,9 +152,8 @@ class Grid {
             return
         }
 
-        // discovering a new place
         this.#currentObject = this.generateGridObject() // generation
-        this.#currentObject.describe()
+        this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -121,9 +172,8 @@ class Grid {
             return
         }
 
-        // discovering a new place
         this.#currentObject = this.generateGridObject() // generation
-        this.#currentObject.describe()
+        this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
@@ -142,9 +192,8 @@ class Grid {
             return
         }
 
-        // discovering a new place
         this.#currentObject = this.generateGridObject() // generation
-        this.#currentObject.describe()
+        this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
