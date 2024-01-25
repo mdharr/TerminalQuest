@@ -12,6 +12,7 @@ class GridObject {
         }
         this.type = type
     }
+
 }
 
 export { GridObject }

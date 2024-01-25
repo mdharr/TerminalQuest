@@ -1,5 +1,0 @@
-class Enemy {
-
-}
-
-export { Enemy }
