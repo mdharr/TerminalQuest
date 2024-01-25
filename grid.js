@@ -77,6 +77,26 @@ class Grid {
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
+    movePlayerUp() {
+        if(this.playerY === 0) {
+            console.log('Cannot move up')
+            return
+        }
+
+        this.grid[this.playerY][this.playerX] = new GridObject("👣", "discovered")
+        this.playerY -= 1
+
+        if(this.grid[this.playerY][this.playerX].type === "discovered") {
+            this.grid[this.playerY][this.playerX].describe()
+            this.grid[this.playerY][this.playerX] = new GridObject('🧝')
+            return
+        }
+
+        // discovering a new place
+        // this.#currentObject = new GridObject() // generation
+        this.grid[this.playerY][this.playerX] = new GridObject('🧝')
+    }
+
 }
 
 new Grid(5, 5)
