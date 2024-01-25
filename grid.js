@@ -149,7 +149,7 @@ class Grid {
 
     movePlayerRight() {
         if(this.playerX === this.width - 1) {
-            console.log('Cannot move right')
+            this.boundaryDialogue()
             return
         }
 
@@ -169,7 +169,7 @@ class Grid {
 
     movePlayerLeft() {
         if(this.playerX === 0) {
-            console.log('Cannot move left')
+            this.boundaryDialogue()
             return
         }
 
@@ -190,7 +190,7 @@ class Grid {
 
     movePlayerUp() {
         if(this.playerY === 0) {
-            console.log('Cannot move up')
+            this.boundaryDialogue()
             return
         }
 
@@ -210,7 +210,7 @@ class Grid {
 
     movePlayerDown() {
         if(this.playerY === this.height - 1) {
-            console.log('Cannot move down')
+            this.boundaryDialogue()
             return
         }
 
@@ -226,6 +226,23 @@ class Grid {
         this.#currentObject = this.generateGridObject()
         this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
+    }
+
+    boundaryDialogue() {
+        const lines = [
+            "Here we stand, at the world's end. No path left to tread.",
+            "The edge of the world... a boundary not even we can cross.",
+            "So this is it, the end of all maps. We can venture no further.",
+            "Our journey halts at the world's brink. There are no roads beyond.",
+            "We've reached the world's edge; our blades cannot carve a path through the void.",
+            "Before us, the great unknown; a boundary we cannot breach.",
+            "At the world's limit, we must pause. Our adventure finds its end.",
+            "The edge of the world, a barrier unyielding. We've gone as far as fate allows.",
+            "This is where our path ends, at the very edge of existence.",
+            "We've reached the end of the world. Here, our footsteps must halt."
+        ]
+        const randomIndex = Math.floor(Math.random() * lines.length)
+        console.log(`Player: "${lines[randomIndex]}"`)
     }
 
 }
