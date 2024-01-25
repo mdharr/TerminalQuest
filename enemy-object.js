@@ -12,6 +12,10 @@ class EnemyObject extends GridObject {
         this.type = "enemy"
         this.#stats = stats
     }
+
+    getName() {
+        return this.#stats.name
+    }
 }
 
 export { EnemyObject }
