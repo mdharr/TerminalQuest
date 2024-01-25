@@ -2,6 +2,7 @@ import { GridObject } from "./grid-object.js"
 import { ItemObject } from "./item-object.js"
 import { EnemyObject } from "./enemy-object.js"
 import { Player } from "./player.js"
+import { promptPlayerForDirection } from "./player-prompts.js"
 
 class Grid {
     #currentObject
@@ -25,11 +26,10 @@ class Grid {
         this.grid[height-1][0] = new GridObject('🧝', 'player')
         this.grid[0][width-1] = new GridObject('🏰', 'win')
 
-        this.displayGrid()
-        this.movePlayerRight()
-        console.log('------------------')
-        this.displayGrid()
+        this.startGame()
     }
+
+
 
     displayGrid() {
         for (let row = 0; row < this.height; row++) {
@@ -87,6 +87,9 @@ class Grid {
         const enemyStats = this.#currentObject.getStats()
         const enemyName = this.#currentObject.getName()
         const playerStats = this.player.getStats()
+
+        console.log(enemyStats)
+        console.log(playerStats)
 
         if (enemyStats.defense > playerStats.attack) {
             console.log(`You lose - ${enemyName} was too powerful!`)
@@ -152,7 +155,7 @@ class Grid {
             return
         }
 
-        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject = this.generateGridObject()
         this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
@@ -172,7 +175,7 @@ class Grid {
             return
         }
 
-        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject = this.generateGridObject()
         this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
@@ -192,7 +195,7 @@ class Grid {
             return
         }
 
-        this.#currentObject = this.generateGridObject() // generation
+        this.#currentObject = this.generateGridObject()
         this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }

@@ -6,7 +6,7 @@ class Player {
     }
     constructor(name, stats) {
         this.name = name
-        this.stats = stats
+        this.#stats = stats
     }
     getName() {
         return this.name
