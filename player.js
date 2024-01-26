@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import { typewriterEffect } from './typewriter.js'
 
 class Player {
     #stats = {
@@ -31,11 +32,12 @@ class Player {
             this.#stats.hp += statsObject.hp
         }
     }
-    describe() {
+    async describe() {
         const stats = this.#stats
         console.log(`${chalk.blue('Player Stats')} -> ${chalk.green('HP')}: ${stats.hp} ${chalk.red('ATK')}: ${stats.attack} ${chalk.yellow('DEF')}: ${stats.defense}`)
+        // await typewriterEffect(`${chalk.blue('Player Stats')} -> ${chalk.green('HP')}: ${stats.hp} ${chalk.red('ATK')}: ${stats.attack} ${chalk.yellow('DEF')}: ${stats.defense}`)
     }
-    embark() {
+    async embark() {
         const lines = [
             "To new horizons we march, blades in hand and courage in heart!",
             "Let this adventure forge us anew, stronger and braver than ever before.",
@@ -50,10 +52,9 @@ class Player {
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
         // console.log(`🧝💬: "${lines[randomIndex]}"`)
-        const result = `🧝💬: "${lines[randomIndex]}"`
-        return result
+        await typewriterEffect(`🧝💬: "${lines[randomIndex]}"`)
     }
-    newLocation() {
+    async newLocation() {
         const lines = [
             "A new land unfolds before us. Let us tread carefully, for danger often hides in beauty.",
             "By my sword, what mysteries does this place hold? Let's uncover its secrets!",
@@ -67,7 +68,8 @@ class Player {
             "New lands, new adventures. May our swords and spirits be ready for whatever lies ahead."
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
-        console.log(`🧝💬: "${lines[randomIndex]}"`)
+        // console.log(`🧝💬: "${lines[randomIndex]}"`)
+        await typewriterEffect(`🧝💬: "${lines[randomIndex]}"`)
     }
 }
 

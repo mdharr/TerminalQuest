@@ -1,4 +1,5 @@
 import { GridObject } from "./grid-object.js";
+import { typewriterEffect } from "./typewriter.js";
 
 class EnemyObject extends GridObject {
     #stats = {
@@ -25,7 +26,7 @@ class EnemyObject extends GridObject {
         }
     }
 
-    describe() {
+    async describe() {
         const spiderEncounterLines = [
             "Halt, eight-legged fiend! Your web of deceit ends here!",
             "By my sword, I shall ensure this is your final hunt, creature of darkness!",
@@ -40,9 +41,15 @@ class EnemyObject extends GridObject {
         ]
         const randomIndex = Math.floor(Math.random() * spiderEncounterLines.length)
         const stats = this.#stats
-        console.log(`${this.sprite} You encountered a ${stats.name}!`)
-        console.log(`🧝💬: "${spiderEncounterLines[randomIndex]}"`)
-        console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+        // console.log(`${this.sprite} You encountered a ${stats.name}!`)
+        // console.log(`🧝💬: "${spiderEncounterLines[randomIndex]}"`)
+        // console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+        const encounter = `${this.sprite} You encountered a ${stats.name}!`
+        const playerLines = `🧝💬: "${spiderEncounterLines[randomIndex]}"`
+        const statsLine = `${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`
+        await typewriterEffect(encounter)
+        await typewriterEffect(playerLines)
+        await typewriterEffect(statsLine)
     }
 }
 

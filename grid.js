@@ -41,29 +41,33 @@ class Grid {
             
             switch (response) {
                 case "Up": {
-                    this.movePlayerUp()
+                    process.stdout.write('\x1Bc')
+                    await this.movePlayerUp()
                     break
                 }
                 case "Down": {
-                    this.movePlayerDown()
+                    process.stdout.write('\x1Bc')
+                    await this.movePlayerDown()
                     break
                 }
                 case "Left": {
-                    this.movePlayerLeft()
+                    process.stdout.write('\x1Bc')
+                    await this.movePlayerLeft()
                     break
                 }
                 case "Right": {
-                    this.movePlayerRight()
+                    process.stdout.write('\x1Bc')
+                    await this.movePlayerRight()
                     break
                 }
             }
 
-            console.log(chalk.white('----------------------------------------------------------------------'))
+            console.log(chalk.white('-------------------------------------------------------------------------------'))
         }
     }
 
     async displayGrid() {
-        this.player.describe()
+        await this.player.describe()
         console.log()
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
@@ -74,7 +78,7 @@ class Grid {
         }
         console.log()
         if(this.#startJourney) {
-            await typewriterEffect(this.player.embark())
+            await this.player.embark()
             this.#startJourney = false
         }
     }
@@ -116,13 +120,13 @@ class Grid {
         }
 
         if (this.#currentObject.type === 'item') {
-            this.#currentObject.describe()
+            await this.#currentObject.describe()
             const itemStats = this.#currentObject.getStats()
             this.player.addToStats(itemStats)
             return
         }
 
-        this.#currentObject.describe()
+        await this.#currentObject.describe()
 
         const enemyStats = this.#currentObject.getStats()
         const enemyName = this.#currentObject.getName()
@@ -132,7 +136,7 @@ class Grid {
         // console.log(playerStats)
 
         if (enemyStats.defense > playerStats.attack) {
-            console.log(`You lose - ${enemyName} was too powerful!`)
+            await typewriterEffect(`You lose - ${enemyName} was too powerful!`)
             process.exit()
         }
 
@@ -149,19 +153,19 @@ class Grid {
             }
 
             if (playerStats.hp <= 0) {
-                console.log(`You lose - ${enemyName} was too powerful!`)
+                await typewriterEffect(`You lose - ${enemyName} was too powerful!`)
                 process.exit()
             }
 
             this.player.addToStats({ hp: -totalPlayerDamage })
-            console.log(`You defeated the ${enemyName}! Your updated stats:`)
-            this.player.describe()
+            await typewriterEffect(`You defeated the ${enemyName}!`)
+            // await this.player.describe()
         }
     }
 
-    movePlayerRight() {
+    async movePlayerRight() {
         if(this.playerX === this.width - 1) {
-            this.boundaryDialogue()
+            await this.boundaryDialogue()
             return
         }
 
@@ -169,22 +173,22 @@ class Grid {
         this.playerX += 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describeOld()
+            await this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
         }
         if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
-            this.grid[this.playerY][this.playerX].describeNew()
+            await this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
-        this.executeTurn()
+        await this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
-    movePlayerLeft() {
+    async movePlayerLeft() {
         if(this.playerX === 0) {
-            this.boundaryDialogue()
+            await this.boundaryDialogue()
             return
         }
 
@@ -192,23 +196,23 @@ class Grid {
         this.playerX -= 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describeOld()
+            await this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
         }
 
         if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
-            this.grid[this.playerY][this.playerX].describeNew()
+            await this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
-        this.executeTurn()
+        await this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
-    movePlayerUp() {
+    async movePlayerUp() {
         if(this.playerY === 0) {
-            this.boundaryDialogue()
+            await this.boundaryDialogue()
             return
         }
 
@@ -216,23 +220,23 @@ class Grid {
         this.playerY -= 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describeOld()
+            await this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
         }
 
         if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
-            this.grid[this.playerY][this.playerX].describeNew()
+            await this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
-        this.executeTurn()
+        await this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
-    movePlayerDown() {
+    async movePlayerDown() {
         if(this.playerY === this.height - 1) {
-            this.boundaryDialogue()
+            await this.boundaryDialogue()
             return
         }
 
@@ -240,21 +244,21 @@ class Grid {
         this.playerY += 1
 
         if(this.grid[this.playerY][this.playerX].type === "discovered") {
-            this.grid[this.playerY][this.playerX].describeOld()
+            await this.grid[this.playerY][this.playerX].describeOld()
             this.grid[this.playerY][this.playerX] = new GridObject('🧝')
             return
         }
 
         if(this.grid[this.playerY][this.playerX].type === "undiscovered") {
-            this.grid[this.playerY][this.playerX].describeNew()
+            await this.grid[this.playerY][this.playerX].describeNew()
         }
 
         this.#currentObject = this.generateGridObject()
-        this.executeTurn()
+        await this.executeTurn()
         this.grid[this.playerY][this.playerX] = new GridObject('🧝')
     }
 
-    boundaryDialogue() {
+    async boundaryDialogue() {
         const lines = [
             "Here we stand, at the world's end. No path left to tread.",
             "The edge of the world... a boundary not even we can cross.",
@@ -268,7 +272,8 @@ class Grid {
             "We've reached the end of the world. Here, our footsteps must halt."
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
-        console.log(`${chalk.blue('🧝💬')}: "${lines[randomIndex]}"`)
+        // console.log(`${chalk.blue('🧝💬')}: "${lines[randomIndex]}"`)
+        await typewriterEffect(`${chalk.blue('🧝💬')}: "${lines[randomIndex]}"`)
     }
 
 }

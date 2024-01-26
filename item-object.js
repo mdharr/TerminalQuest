@@ -1,4 +1,5 @@
 import { GridObject } from "./grid-object.js"
+import { typewriterEffect } from "./typewriter.js"
 
 class ItemObject extends GridObject {
     #stats = {
@@ -22,7 +23,7 @@ class ItemObject extends GridObject {
             hp: this.#stats.hp
         }
     }
-    describe() {
+    async describe() {
         const swordDiscoveryLines = [
             "Behold, the gleam of enchanted steel! This blade has tales yet untold.",
             "By my ancestors, this sword hums with ancient power. It shall be a worthy companion.",
@@ -37,9 +38,15 @@ class ItemObject extends GridObject {
         ]
         const randomIndex = Math.floor(Math.random() * swordDiscoveryLines.length)
         const stats = this.#stats
-        console.log(`${this.sprite} You found a ${stats.name}!`)
-        console.log(`🧝💬: "${swordDiscoveryLines[randomIndex]}"`)
-        console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+        // console.log(`${this.sprite} You found a ${stats.name}!`)
+        // console.log(`🧝💬: "${swordDiscoveryLines[randomIndex]}"`)
+        // console.log(`${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`)
+        const foundItem = `${this.sprite} You found a ${stats.name}!`
+        const playerLine = `🧝💬: "${swordDiscoveryLines[randomIndex]}"`
+        const weaponStats = `${stats.name}'s Stats -> HP: ${stats.hp} ATK: ${stats.attack} DEF: ${stats.defense}`
+        await typewriterEffect(foundItem)
+        await typewriterEffect(playerLine)
+        await typewriterEffect(weaponStats)
     }
 }
 

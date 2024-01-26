@@ -1,3 +1,5 @@
+import { typewriterEffect } from "./typewriter.js"
+
 class GridObject {
     #backgroundSprites = ['🌳', '🌲', '🌴', '🌵']
 
@@ -13,7 +15,7 @@ class GridObject {
         this.type = type
     }
 
-    describeNew() {
+    async describeNew() {
         const lines = [
             "A new land unfolds before us. Let us tread carefully, for danger often hides in beauty.",
             "By my sword, what mysteries does this place hold? Let's uncover its secrets!",
@@ -27,10 +29,11 @@ class GridObject {
             "New lands, new adventures. May our swords and spirits be ready for whatever lies ahead."
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
-        console.log(`🧝💬: "${lines[randomIndex]}"`)
+        // console.log(`🧝💬: "${lines[randomIndex]}"`)
+        await typewriterEffect(`🧝💬: "${lines[randomIndex]}"`)
     }
 
-    describeOld() {
+    async describeOld() {
         const lines = [
             "Back to familiar grounds, yet each step reveals a new story.",
             "These walls hold memories of our past journey. Let's see what they offer this time.",
@@ -44,7 +47,8 @@ class GridObject {
             "This place feels both familiar and strange. Let's see what fate has in store for us."
         ]
         const randomIndex = Math.floor(Math.random() * lines.length)
-        console.log(`🧝💬: "${lines[randomIndex]}"`)
+        // console.log(`🧝💬: "${lines[randomIndex]}"`)
+        await typewriterEffect(`🧝💬: "${lines[randomIndex]}"`)
     }
 
 }
