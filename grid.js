@@ -3,7 +3,8 @@ import { ItemObject } from "./item-object.js"
 import { EnemyObject } from "./enemy-object.js"
 import { Player } from "./player.js"
 import { promptPlayerForDirection } from "./player-prompts.js"
-import { typewriterEffect } from "./typewriter.js"
+import { typewriterEffect, typewriterEnding } from "./typewriter.js"
+import { getEnding } from "./endings.js"
 
 import chalk from 'chalk'
 
@@ -110,7 +111,10 @@ class Grid {
     async executeTurn() {
         if (this.grid[this.playerY][this.playerX].type === 'win') {
             // console.log(`Congrats! You win!`)
-            await typewriterEffect(`Congrats! You win!`)
+            // await typewriterEffect(`Congrats! You win!`)
+            await typewriterEffect(`🧝💬: "${getEnding()[0]}"`)
+            await typewriterEnding(`"${getEnding()[1]}"`)
+            await typewriterEffect('The End')
             process.exit()
         }
 
